@@ -7,8 +7,8 @@ Contains:
 - LESS  
 - Watch  
 - Express  
-- Concat  
--Livereload  
+- Concat    
+- Livereload  
 
 
 ##Prerequisite
