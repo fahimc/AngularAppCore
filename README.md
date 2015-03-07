@@ -36,4 +36,12 @@ grunt
 *Dist - Compiled version of your app and used by grunt  
 *Less - Contains Core less files which compiles to CSS
 
+##Grunt Tasks
 
+```
+grunt cm --name=moduleName
+grunt rm --name=moduleName
+```
+
+- cm = create a new module. option --name is the name if the module. Creates all the files, folders for the module and adds it to the app.  
+- rm = deletes a new module. option --name is the name of the module. Removes the module from the app and deletes the folder.
