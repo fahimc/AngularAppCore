@@ -87,46 +87,46 @@ less: {
 },
 watch: {
   js: {
-        files: 'App/js/**/*.js',
-        tasks: ['concat','copy:js'],
-        options: {
-          interrupt: false,
-          livereload: true,
-        }
-      },
-      less: {
-        files: 'Less/**/*.less',
-        tasks: ['less','copy:css'],
-        options: {
-          interrupt: false,
-          livereload: true,
-        }
-      },
-      lessModules: {
-        files: 'App/**/*.less',
-        tasks: ['less','copy:css'],
-        options: {
-          interrupt: false,
-          livereload: true,
-        }
-      },
-      index: {
-        files: 'App/index.html',
-        tasks: ['copy:index','injectLiveReload'],
-        options: {
-          interrupt: false,
-          livereload: true,
-        }
-      },
-      templates: {
-        files: 'app/js/**/*.html',
-        tasks: ['ngtemplates','copy:js'],
-        options: {
-          interrupt: false,
-          livereload: true,
-        }
-      },
- 
+    files: 'App/js/**/*.js',
+    tasks: ['concat','copy:js'],
+    options: {
+      interrupt: false,
+      livereload: true,
+    }
+  },
+  less: {
+    files: 'Less/**/*.less',
+    tasks: ['less','copy:css'],
+    options: {
+      interrupt: false,
+      livereload: true,
+    }
+  },
+  lessModules: {
+    files: 'App/**/*.less',
+    tasks: ['less','copy:css'],
+    options: {
+      interrupt: false,
+      livereload: true,
+    }
+  },
+  index: {
+    files: 'App/index.html',
+    tasks: ['copy:index','injectLiveReload'],
+    options: {
+      interrupt: false,
+      livereload: true,
+    }
+  },
+  templates: {
+    files: 'app/js/**/*.html',
+    tasks: ['ngtemplates','copy:js'],
+    options: {
+      interrupt: false,
+      livereload: true,
+    }
+  },
+
 },
 connect: {
   server: {
@@ -190,6 +190,37 @@ function injectLiveReload(){
   grunt.file.write('Dist/index.html',content);
 }
 
+function createModule(){
+  var name = grunt.option('name');
+  grunt.file.mkdir("App/js/src/modules/"+name);
+  function onFile(abspath, rootdir, subdir, filename){
+    var path = abspath.replace("grunt/templates/module/","");
+    path = path.replace(/moduleName/g,name);
+    filename = filename.replace(/moduleName/g,name);
+    var folderPath = path.replace(path.substr(path.lastIndexOf('/') + 1), '');
+    var content  = grunt.file.read(abspath);
+    content = content.replace(/moduleName/g,name);
+    grunt.file.mkdir("App/js/src/modules/"+folderPath);
+    grunt.file.write("App/js/src/modules/"+folderPath+"/"+filename,content);
+  }
+  grunt.file.recurse('grunt/templates/module', onFile);
+
+  var mainContent  = grunt.file.read('App/js/src/main.js');
+  mainContent = mainContent.replace(']);',",'"+name+"']);");
+  grunt.file.write('App/js/src/main.js',mainContent);
+  grunt.task.run('default');
+}
+function deleteModule(){
+  var name = grunt.option('name');
+
+  grunt.file.delete("App/js/src/modules/"+name);
+
+  var mainContent  = grunt.file.read('App/js/src/main.js');
+  mainContent = mainContent.replace(",'"+name+"'","");
+  grunt.file.write('App/js/src/main.js',mainContent);
+  grunt.task.run('default');
+}
+
   // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -203,4 +234,6 @@ function injectLiveReload(){
   // Default task(s).
   grunt.registerTask('default', ['ngtemplates','concat','less','copy','injectLiveReload','concurrent']);
   grunt.registerTask('injectLiveReload',injectLiveReload);
+  grunt.registerTask('cm',createModule);
+  grunt.registerTask('rm',deleteModule);
 };
