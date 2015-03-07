@@ -204,11 +204,15 @@ function createModule(){
     grunt.file.write("App/js/src/modules/"+folderPath+"/"+filename,content);
   }
   grunt.file.recurse('grunt/templates/module', onFile);
-
+  //update app
   var mainContent  = grunt.file.read('App/js/src/main.js');
   mainContent = mainContent.replace(']);',",'"+name+"']);");
   grunt.file.write('App/js/src/main.js',mainContent);
   grunt.task.run('default');
+  //update less
+   var lessContent  = grunt.file.read('Less/main.less');
+   lessContent+="\n@import './App/js/src/modules/"+name+"/style/"+name+"';";
+   grunt.file.write('Less/main.less',lessContent);
 }
 function deleteModule(){
   var name = grunt.option('name');
@@ -218,6 +222,11 @@ function deleteModule(){
   var mainContent  = grunt.file.read('App/js/src/main.js');
   mainContent = mainContent.replace(",'"+name+"'","");
   grunt.file.write('App/js/src/main.js',mainContent);
+
+  var lessContent  = grunt.file.read('Less/main.less');
+   lessContent = lessContent.replace("@import './App/js/src/modules/"+name+"/style/"+name+"';","");
+   grunt.file.write('Less/main.less',lessContent);
+
   grunt.task.run('default');
 }
 
