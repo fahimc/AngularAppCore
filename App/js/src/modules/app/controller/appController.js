@@ -1,18 +1,15 @@
 'use strict';
 
 angular.module('app').controller('appController',function($scope,$rootScope){
-
-	function AppController(){
-		this.init();
-	};
-
-	AppController.prototype=
+	var Controller=
 	{
 		init:function(){
+
 		}
 	};
 
+	Controller.init();
 
-	return new AppController();
+	return Controller;
 
 });

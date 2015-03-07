@@ -251,35 +251,27 @@ app.config(['$routeProvider',
 'use strict';
 
 angular.module('app').controller('appController',function($scope,$rootScope){
-
-	function AppController(){
-		this.init();
-	};
-
-	AppController.prototype=
+	var Controller=
 	{
 		init:function(){
+
 		}
 	};
 
+	Controller.init();
 
-	return new AppController();
+	return Controller;
 
 });
 
 'use strict';
 
 angular.module('titleBar').controller('titleBarController',function($scope,$rootScope,$location){
-
-	function titleBarController(){
-		$scope.onCloseClicked=this.onCloseClicked;
-		$scope.onHomeClicked=this.onHomeClicked;
-		this.init();
-	};
-
-	titleBarController.prototype=
+	var Controller=
 	{
 		init:function(){
+			$scope.onCloseClicked=this.onCloseClicked;
+			$scope.onHomeClicked=this.onHomeClicked;
 			$scope.subtitle = "Example App";
 		},
 		onCloseClicked:function(){
@@ -290,9 +282,9 @@ angular.module('titleBar').controller('titleBarController',function($scope,$root
 		}
 	};
 
+	Controller.init();
 
-	return new titleBarController();
-
+	return Controller;
 });
 
 'use strict';
