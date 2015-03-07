@@ -1,7 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
 @font-face {
   font-family: 'fontello';
-  src: url('../fonts/fontello/fontello.woff') format('woff');
+  src: url('../resource/fonts/fontello/fontello.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -11,8 +11,7 @@
 }
 html,
 body {
-  min-width: 900px;
-  min-height: 600px;
+  font-size: 13px;
   height: 100%;
   width: 100%;
   overflow: hidden;
@@ -21,13 +20,11 @@ body {
   background-color: #333333;
   color: #e4e4e4;
   font-family: 'Open Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
 }
 div[ng-view] {
-  position: absolute;
-  top: 30px;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  flex: 1;
 }
 .view-holder {
   height: calc(71%);
@@ -38,13 +35,16 @@ div[ng-view] {
 .titlebar {
   -webkit-app-region: drag;
   background-color: #121212;
-  padding: 5px;
   font-size: 14px;
+}
+.titlebar nav {
+  margin-bottom: 0;
 }
 .titlebar button.icon-cancel {
   float: right;
   margin-right: 5px;
   -webkit-app-region: no-drag;
+  margin-top: 10px;
 }
 .titlebar button.home {
   margin-left: 5px;

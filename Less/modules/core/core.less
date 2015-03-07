@@ -4,8 +4,7 @@
 }
 html,body
 {
-	min-width: 900px;
-	min-height: 600px;
+	font-size: 13px;
 	height: 100%;
 	width: 100%;
 	overflow: hidden;
@@ -14,14 +13,12 @@ html,body
 	background-color: @black1;
 	color: #e4e4e4;
 	font-family: 'Open Sans', sans-serif;
+	display: flex;
+	flex-direction: column;
 }
 
 div[ng-view] {
-	position: absolute;
-	top: 30px;
-	right: 0;
-	bottom: 0;
-	left: 0;
+	flex: 1;
 }
 .view-holder
 {
